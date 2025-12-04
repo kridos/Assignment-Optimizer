@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { courseOps, assignmentOps } from '../db/operations';
+import { TimePredictionService } from '../services/timePrediction';
 import type { AssignmentType } from '../types';
 
 interface AddAssignmentFormProps {
@@ -28,6 +29,46 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
     code: '',
     color: '#3B82F6',
   });
+
+  const [prediction, setPrediction] = useState<{
+    hours: number;
+    reason: string;
+    confidence: string;
+  } | null>(null);
+  const [showPrediction, setShowPrediction] = useState(true);
+
+  // Auto-predict time when course/type/title/description changes
+  useEffect(() => {
+    const getPrediction = async () => {
+      if (!formData.courseId || showNewCourseForm) {
+        setPrediction(null);
+        return;
+      }
+
+      const courseId = parseInt(formData.courseId);
+      const result = await TimePredictionService.predictTime(
+        courseId,
+        formData.assignmentType,
+        formData.title,
+        formData.description
+      );
+
+      if (result.estimatedHours > 0) {
+        setPrediction({
+          hours: result.estimatedHours,
+          reason: result.reason,
+          confidence: result.confidence,
+        });
+
+        // Only auto-fill if user hasn't entered anything
+        if (!formData.estimatedHours) {
+          setFormData(prev => ({ ...prev, estimatedHours: result.estimatedHours.toString() }));
+        }
+      }
+    };
+
+    getPrediction();
+  }, [formData.courseId, formData.assignmentType, formData.title, formData.description, showNewCourseForm]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,9 +112,9 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-6">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50" onClick={onClose}>
+      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-2xl w-full max-h-[90vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+        <div className="p-6 overflow-y-auto flex-1">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Add New Assignment
           </h2>
@@ -232,12 +273,32 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
                 <input
                   type="number"
                   value={formData.estimatedHours}
-                  onChange={(e) => setFormData({ ...formData, estimatedHours: e.target.value })}
+                  onChange={(e) => {
+                    setFormData({ ...formData, estimatedHours: e.target.value });
+                    setShowPrediction(false);
+                  }}
                   min="0"
                   step="0.5"
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
                   placeholder="0"
                 />
+                {prediction && showPrediction && (
+                  <div className={`mt-2 p-2 rounded text-sm ${
+                    prediction.confidence === 'high'
+                      ? 'bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-300'
+                      : prediction.confidence === 'medium'
+                      ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300'
+                      : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+                  }`}>
+                    <div className="font-medium">
+                      💡 Suggested: {prediction.hours}h
+                      <span className="ml-2 text-xs opacity-75">
+                        ({prediction.confidence} confidence)
+                      </span>
+                    </div>
+                    <div className="text-xs mt-1 opacity-90">{prediction.reason}</div>
+                  </div>
+                )}
               </div>
             </div>
 
