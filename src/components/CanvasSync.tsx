@@ -163,9 +163,36 @@ export const CanvasSync: React.FC<CanvasSyncProps> = ({ onClose, onSuccess }) =>
     }));
   };
 
+  console.log('CanvasSync component rendering NOW');
+
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fadeIn" onClick={onClose}>
-      <div className="bg-white dark:bg-gray-800 rounded-2xl max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl animate-slideUp" onClick={(e) => e.stopPropagation()}>
+    <div
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fadeIn"
+      onClick={onClose}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 9999,
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}
+    >
+      <div
+        className="bg-white dark:bg-gray-800 rounded-2xl max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl animate-slideUp"
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          backgroundColor: 'white',
+          maxWidth: '48rem',
+          width: '100%',
+          zIndex: 10000,
+          position: 'relative'
+        }}
+      >
         <div className="p-6 overflow-y-auto flex-1">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Sync with Canvas
