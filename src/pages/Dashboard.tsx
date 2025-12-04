@@ -71,6 +71,7 @@ export const Dashboard: React.FC = () => {
             <div className="flex space-x-3">
               <button
                 onClick={() => {
+                  console.log('Canvas Sync clicked');
                   setShowAddForm(false);
                   setShowCanvasSync(true);
                 }}
@@ -80,6 +81,7 @@ export const Dashboard: React.FC = () => {
               </button>
               <button
                 onClick={() => {
+                  console.log('Add Assignment clicked');
                   setShowCanvasSync(false);
                   setShowAddForm(true);
                 }}
