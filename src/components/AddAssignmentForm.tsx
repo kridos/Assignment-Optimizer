@@ -128,10 +128,9 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
       }}
     >
       <div
-        className="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl animate-slideUp"
+        className="bg-gray-900 rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl animate-slideUp"
         onClick={(e) => e.stopPropagation()}
         style={{
-          backgroundColor: 'white',
           maxWidth: '42rem',
           width: '100%',
           zIndex: 10000,
@@ -139,13 +138,13 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
         }}
       >
         {/* Header */}
-        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+        <div className="px-6 py-4 border-b border-gray-700 flex items-center justify-between">
+          <h2 className="text-xl font-bold text-white">
             ✏️ New Assignment
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            className="text-gray-400 hover:text-gray-200 transition-colors"
           >
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -158,8 +157,8 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Course Selection */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                Course <span className="text-red-500">*</span>
+              <label className="block text-sm font-semibold text-gray-200 mb-2">
+                Course <span className="text-red-400">*</span>
               </label>
               {!showNewCourseForm ? (
                 <div className="space-y-2">
@@ -167,7 +166,7 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
                     value={formData.courseId}
                     onChange={(e) => setFormData({ ...formData, courseId: e.target.value })}
                     required
-                    className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-all"
+                    className="w-full px-4 py-2.5 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-800 text-white transition-all"
                   >
                     <option value="">Choose a course...</option>
                     {courses?.map((course) => (
@@ -179,13 +178,13 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
                   <button
                     type="button"
                     onClick={() => setShowNewCourseForm(true)}
-                    className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 font-medium"
+                    className="text-sm text-blue-400 hover:text-blue-300 font-medium"
                   >
                     + Create New Course
                   </button>
                 </div>
               ) : (
-                <div className="space-y-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
+                <div className="space-y-3 p-4 bg-blue-900/20 rounded-xl border border-blue-800">
                   <input
                     type="text"
                     placeholder="Course Name (e.g., Data Structures)"
@@ -203,7 +202,7 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
                     className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
                   />
                   <div className="flex items-center space-x-3">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Color:</label>
+                    <label className="text-sm font-medium text-gray-200">Color:</label>
                     <input
                       type="color"
                       value={newCourse.color}
@@ -214,7 +213,7 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
                   <button
                     type="button"
                     onClick={() => setShowNewCourseForm(false)}
-                    className="text-sm text-gray-600 hover:text-gray-700 dark:text-gray-400 font-medium"
+                    className="text-sm text-gray-300 hover:text-gray-200 font-medium"
                   >
                     ← Back to existing courses
                   </button>
@@ -224,7 +223,7 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
 
             {/* Assignment Title */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-semibold text-gray-200 mb-2">
                 Title <span className="text-red-500">*</span>
               </label>
               <input
@@ -232,7 +231,7 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 required
-                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-all"
+                className="w-full px-4 py-2.5 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-800 text-white transition-all"
                 placeholder="e.g., Homework 3 - Binary Search Trees"
               />
             </div>
@@ -240,7 +239,7 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
             {/* Due Date and Time - Compact Grid */}
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-semibold text-gray-200 mb-2">
                   Due Date <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -248,18 +247,18 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
                   value={formData.dueDate}
                   onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
                   required
-                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                  className="w-full px-4 py-2.5 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-800 text-white"
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-semibold text-gray-200 mb-2">
                   Time
                 </label>
                 <input
                   type="time"
                   value={formData.dueTime}
                   onChange={(e) => setFormData({ ...formData, dueTime: e.target.value })}
-                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                  className="w-full px-4 py-2.5 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-800 text-white"
                 />
               </div>
             </div>
@@ -267,7 +266,7 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
             {/* Type and Points - Compact Grid */}
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-semibold text-gray-200 mb-2">
                   Type
                 </label>
                 <select
@@ -275,7 +274,7 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
                   onChange={(e) =>
                     setFormData({ ...formData, assignmentType: e.target.value as AssignmentType })
                   }
-                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                  className="w-full px-4 py-2.5 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-800 text-white"
                 >
                   <option value="homework">Homework</option>
                   <option value="project">Project</option>
@@ -287,7 +286,7 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-semibold text-gray-200 mb-2">
                   Points
                 </label>
                 <input
@@ -296,7 +295,7 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
                   onChange={(e) => setFormData({ ...formData, points: e.target.value })}
                   min="0"
                   step="0.1"
-                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                  className="w-full px-4 py-2.5 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-800 text-white"
                   placeholder="0"
                 />
               </div>
@@ -304,7 +303,7 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
 
             {/* Estimated Hours with Prediction */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-semibold text-gray-200 mb-2">
                 Estimated Hours
               </label>
               <input
@@ -316,7 +315,7 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
                 }}
                 min="0"
                 step="0.5"
-                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                className="w-full px-4 py-2.5 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-800 text-white"
                 placeholder="0"
               />
               {prediction && showPrediction && (
@@ -325,29 +324,29 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
                     ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800'
                     : prediction.confidence === 'medium'
                     ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800'
-                    : 'bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600'
+                    : 'bg-gray-700 border-gray-600'
                 }`}>
-                  <div className="font-semibold text-gray-900 dark:text-white">
+                  <div className="font-semibold text-white">
                     💡 {prediction.hours}h suggested
                     <span className="ml-2 text-xs font-normal opacity-75">
                       ({prediction.confidence} confidence)
                     </span>
                   </div>
-                  <div className="text-xs mt-1 text-gray-600 dark:text-gray-400">{prediction.reason}</div>
+                  <div className="text-xs mt-1 text-gray-300">{prediction.reason}</div>
                 </div>
               )}
             </div>
 
             {/* Description - Optional */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-semibold text-gray-200 mb-2">
                 Description <span className="text-gray-400 text-xs">(optional)</span>
               </label>
               <textarea
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 rows={2}
-                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white resize-none"
+                className="w-full px-4 py-2.5 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-800 text-white resize-none"
                 placeholder="Optional details..."
               />
             </div>
@@ -357,7 +356,7 @@ export const AddAssignmentForm: React.FC<AddAssignmentFormProps> = ({ onClose, o
               <button
                 type="button"
                 onClick={onClose}
-                className="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-colors"
+                className="px-5 py-2.5 bg-gray-700 hover:bg-gray-600 text-gray-200 rounded-xl font-medium transition-colors"
               >
                 Cancel
               </button>
