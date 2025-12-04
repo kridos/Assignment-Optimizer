@@ -72,8 +72,10 @@ export const Dashboard: React.FC = () => {
               <button
                 onClick={() => {
                   console.log('Canvas Sync clicked');
+                  console.log('Before state change - showCanvasSync:', showCanvasSync, 'showAddForm:', showAddForm);
                   setShowAddForm(false);
                   setShowCanvasSync(true);
+                  console.log('After state change called');
                 }}
                 className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
               >
@@ -82,8 +84,10 @@ export const Dashboard: React.FC = () => {
               <button
                 onClick={() => {
                   console.log('Add Assignment clicked');
+                  console.log('Before state change - showAddForm:', showAddForm, 'showCanvasSync:', showCanvasSync);
                   setShowCanvasSync(false);
                   setShowAddForm(true);
+                  console.log('After state change called');
                 }}
                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
               >
@@ -169,18 +173,25 @@ export const Dashboard: React.FC = () => {
       <Timer onComplete={handleTimerComplete} />
 
       {/* Modals */}
+      {console.log('Render check - showAddForm:', showAddForm, 'showCanvasSync:', showCanvasSync)}
       {showAddForm && (
-        <AddAssignmentForm
-          onClose={() => setShowAddForm(false)}
-          onSuccess={() => setShowAddForm(false)}
-        />
+        <>
+          {console.log('Rendering AddAssignmentForm')}
+          <AddAssignmentForm
+            onClose={() => setShowAddForm(false)}
+            onSuccess={() => setShowAddForm(false)}
+          />
+        </>
       )}
 
       {showCanvasSync && (
-        <CanvasSync
-          onClose={() => setShowCanvasSync(false)}
-          onSuccess={() => setShowCanvasSync(false)}
-        />
+        <>
+          {console.log('Rendering CanvasSync')}
+          <CanvasSync
+            onClose={() => setShowCanvasSync(false)}
+            onSuccess={() => setShowCanvasSync(false)}
+          />
+        </>
       )}
     </div>
   );
